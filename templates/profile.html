@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            <i class="bi bi-person-circle"></i>
+        </div>
+
+        <h2>My Profile</h2>
+
+        <p class="profile-welcome">
+            Welcome,
+            {% if request.user.first_name %}
+                {{ request.user.first_name }}
+            {% else %}
+                {{ request.user.username }}
+            {% endif %}
+        </p>
+
+        <div class="profile-info">
+
+            <div class="profile-info-row">
+                <span>Full Name</span>
+
+                <strong>
+                    {% if request.user.first_name or request.user.last_name %}
+                        {{ request.user.first_name }}
+                        {{ request.user.last_name }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </strong>
+            </div>
+
+            <div class="profile-info-row">
+                <span>Username</span>
+                <strong>{{ request.user.username }}</strong>
+            </div>
+
+            <div class="profile-info-row">
+                <span>Email</span>
+
+                <strong>
+                    {% if request.user.email %}
+                        {{ request.user.email }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="profile-menu">
+
+            <a href="#" class="profile-menu-card">
+                <i class="bi bi-box-seam"></i>
+                <span>My Orders</span>
+            </a>
+
+            <a href="#" class="profile-menu-card">
+                <i class="bi bi-heart"></i>
+                <span>Wishlist</span>
+            </a>
+
+            <a href="#" class="profile-menu-card">
+                <i class="bi bi-bag"></i>
+                <span>My Bag</span>
+            </a>
+
+        </div>
+
+        <a href="{% url 'logout' %}" class="profile-logout">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

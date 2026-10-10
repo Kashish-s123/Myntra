@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>My Orders</h2>
+
+    {% for order in orders %}
+
+        <div class="card mb-3">
+
+            <div class="card-body">
+
+                <h5>
+                    Order #{{ order.id }}
+                </h5>
+
+                <p>
+                    Date: {{ order.created_at }}
+                </p>
+
+                <p>
+                    Status: {{ order.status }}
+                </p>
+
+                <p>
+                    Total: ₹{{ order.total_amount }}
+                </p>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p>
+            You haven't placed any orders yet.
+        </p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

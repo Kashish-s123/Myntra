@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-card login-card">
+
+        <div class="auth-heading">
+
+            <h2>Login</h2>
+
+            <p>
+                Welcome back to Myntra Clone
+            </p>
+
+        </div>
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="alert alert-{{ message.tags }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label
+                    for="username"
+                    class="form-label">
+
+                    Username
+
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    class="form-control"
+                    placeholder="Enter username"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label
+                    for="password"
+                    class="form-label">
+
+                    Password
+
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Enter password"
+                    required>
+
+            </div>
+
+            <button
+                type="submit"
+                class="auth-button">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+
+            Don't have an account?
+
+            <a href="{% url 'signup' %}">
+                Sign Up
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

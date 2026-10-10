@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row g-4">
+
+        <!-- ================= DELIVERY ADDRESS ================= -->
+
+        <div class="col-lg-7">
+
+            <h2 class="mb-4">
+                Delivery Address
+            </h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        class="form-control"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        placeholder="Enter phone number"
+                        required>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        rows="4"
+                        placeholder="House no., street, area"
+                        required></textarea>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        name="city"
+                        class="form-control"
+                        placeholder="Enter city"
+                        required>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Pincode
+                    </label>
+
+                    <input
+                        type="text"
+                        name="pincode"
+                        class="form-control"
+                        placeholder="Enter pincode"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-pink w-100">
+
+                    Confirm Order
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= ORDER SUMMARY ================= -->
+
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4">
+                        Order Summary
+                    </h4>
+
+                    {% for item in bag_items %}
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <div>
+
+                                <strong>
+                                    {{ item.product.name }}
+                                </strong>
+
+                                <div class="text-muted">
+                                    Qty: {{ item.quantity }}
+                                </div>
+
+                            </div>
+
+                            <span>
+                                ₹{{ item.subtotal }}
+                            </span>
+
+                        </div>
+
+                    {% empty %}
+
+                        <p>
+                            No products in your bag.
+                        </p>
+
+                    {% endfor %}
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <h5>
+                            Total
+                        </h5>
+
+                        <h5 class="text-danger">
+                            ₹{{ total_amount }}
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>My Bag</h2>
+
+        <span class="text-muted">
+            {{ bag_items|length }} Item(s)
+        </span>
+
+    </div>
+
+    {% if bag_items %}
+
+    <div class="row">
+
+        <!-- LEFT SIDE -->
+
+        <div class="col-lg-8">
+
+            {% for item in bag_items %}
+
+            <div class="card mb-4 shadow-sm">
+
+                <div class="row g-0">
+
+                    <div class="col-md-4">
+
+                        {% if item.product.image %}
+
+                        <img
+                            src="{{ item.product.image.url }}"
+                            class="img-fluid rounded-start w-100"
+                            style="height:220px; object-fit:cover;"
+                            alt="{{ item.product.name }}">
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="card-body">
+
+                            <h4>
+                                {{ item.product.name }}
+                            </h4>
+
+                            <p class="text-muted mb-1">
+                                Brand: {{ item.product.brand }}
+                            </p>
+
+                            <p class="mb-1">
+                                Price: ₹{{ item.product.price }}
+                            </p>
+
+                            <p class="mb-1">
+                                Quantity: {{ item.quantity }}
+                            </p>
+
+                            <p class="fw-bold text-danger">
+                                Subtotal: ₹{{ item.subtotal }}
+                            </p>
+
+                            <div class="d-flex gap-2 mt-3">
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'decrease_bag_quantity' item.id %}">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary">
+
+                                        −
+
+                                    </button>
+
+                                </form>
+
+                                <span class="d-flex align-items-center px-2">
+                                    {{ item.quantity }}
+                                </span>
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'increase_bag_quantity' item.id %}">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary">
+
+                                        +
+
+                                    </button>
+
+                                </form>
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'remove_from_bag' item.id %}">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger ms-2">
+
+                                        Remove
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h5 class="mb-4">
+                        PRICE DETAILS
+                    </h5>
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span>Total MRP</span>
+
+                        <span>
+                            ₹{{ total_amount }}
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span>Discount</span>
+
+                        <span class="text-success">
+                            ₹0
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span>Delivery</span>
+
+                        <span class="text-success">
+                            FREE
+                        </span>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between mb-4">
+
+                        <strong>Total Amount</strong>
+
+                        <strong>
+                            ₹{{ total_amount }}
+                        </strong>
+
+                    </div>
+<a href="{% url 'checkout' %}"
+    class="btn btn-pink w-100">PLACE ORDER</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center mt-5">
+
+        <i
+            class="bi bi-bag"
+            style="font-size:70px; color:#ff3f6c;">
+        </i>
+
+        <h3 class="mt-3">
+            Your Bag is Empty
+        </h3>
+
+        <p class="text-muted">
+            Add products to your bag to see them here.
+        </p>
+
+        <a
+            href="{% url 'product_list' %}"
+            class="btn btn-pink">
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
